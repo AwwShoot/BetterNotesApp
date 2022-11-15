@@ -1,4 +1,4 @@
-package com.example.betternotesapp;
+package io.github.awwshoot.betternotesapp;
 
 import org.junit.Test;
 

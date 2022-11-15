@@ -1,4 +1,4 @@
-package com.example.betternotesapp;
+package io.github.awwshoot.betternotesapp;
 
 import android.content.Context;
 
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.example.betternotesapp", appContext.getPackageName());
+        assertEquals("io.github.awwshoot.betternotesapp", appContext.getPackageName());
     }
 }
