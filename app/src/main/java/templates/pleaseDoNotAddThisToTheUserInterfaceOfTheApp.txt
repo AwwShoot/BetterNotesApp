@@ -79,6 +79,11 @@ routines
 - add button for new routine
 - add button for new step
 
+sizes
+- add button for new store
+- add button for new person
+- add button for new size
+
 travel
 - link calendar
 - add button for separate travel plans, like different flights
