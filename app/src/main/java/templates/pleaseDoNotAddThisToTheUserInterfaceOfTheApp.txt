@@ -1,0 +1,102 @@
+maybe shits
+
+- do we have time to make folders to organize things
+- sort by initial type
+
+addresses
+- add button for adding new addresses
+
+budget
+- add button for new month
+- add button for new individual bill
+- add button for new miscellaneous expense
+
+chores
+- add button for new person
+- add button for new chore
+
+creative
+- add button for part
+
+dates
+- add button for new date
+- link calendar
+
+diet
+- add button for week
+- add button for day
+- add button for meal
+- add button for ingredient
+
+food
+- add button for new person
+- add button for new order
+
+gifts
+- add button for new occasion
+- add button for new person/gift
+
+groceries
+- add button for new store
+- add button for adding items
+
+homework
+- add button for new class/assignment
+- link calendar, canvas, and/or google classroom
+
+medication
+- add button for day
+- add button for medication
+- add button for time
+- add button for dose
+- add button for additional information
+
+passwords
+- add button for adding services
+- add button for different user information
+
+plant
+- link calendar
+
+project
+- add button for the next week's plans
+- add button for adding tasks
+
+quotes
+- add button for quote
+
+reading
+- add button for new book at end of file
+
+recommendation
+- add button for new recommendation
+
+recipes
+- add button for ingredients
+- add button for instruction
+
+routines
+- add button for new routine
+- add button for new step
+
+sizes
+- add button for new store
+- add button for new person
+- add button for new size
+
+travel
+- link calendar
+- add button for separate travel plans, like different flights
+- add button for itinerary per specific location
+- add button for adding people to packing list
+
+watchlist
+- add button for new show
+
+workouts
+- add button for new workout
+
+in case of emergency (add later)
+- emergency contact
+- health insurance provider
+- maybe do this only if there's a lock feature
