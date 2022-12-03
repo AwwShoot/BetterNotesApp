@@ -1,5 +1,7 @@
 maybe shits
 
+- add buttons for adding checkboxes, - [] and - [x] in markdown
+
 - do we have time to make folders to organize things
 - sort by initial type
 
