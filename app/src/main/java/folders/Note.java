@@ -31,14 +31,16 @@ public class Note {
         try {
             File target = new File("");
             // get file location
-            if ( == null) {
-                System.out.print("note does not exist");
-            }
-            else {
-                // open file
+            File documentsFolder = new File("root/internal/Documents/");
+            String[] directoryList = documentsFolder.list();
+            for (int counter = 1; counter < directoryList.length; counter++) {
+                String check = documentsFolder.toString();
+                if (check == directoryList[counter]) {
+                    // open file
+                }
             }
         }
-        catch (IOException openE) {
+        catch (Exception openE) {
             System.out.print("error");
             openE.printStackTrace();
         }
