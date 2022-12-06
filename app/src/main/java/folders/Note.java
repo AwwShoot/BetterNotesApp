@@ -13,7 +13,7 @@ public class Note {
             try {
                 File note = new File("root/internal/Documents/newNote.md");
                 if (note.createNewFile()) {
-                    // change file to template, make this a switch case statement
+                    // change file to template
                     // change file name and location
                     // open file
                     openN();
