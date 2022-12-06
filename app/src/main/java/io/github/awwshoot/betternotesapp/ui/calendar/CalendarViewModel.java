@@ -10,7 +10,7 @@ public class CalendarViewModel extends ViewModel {
 
     public CalendarViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("Integrate with Google Calendar");
+        mText.setValue("Integrate with Calendar");
     }
 
     public LiveData<String> getText() {
