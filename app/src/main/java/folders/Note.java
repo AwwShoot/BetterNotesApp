@@ -10,23 +10,23 @@ import java.nio.file.Files;
 public class Note {
     static void newN() {
         // create new file in default
-            try {
-                File note = new File("root/internal/Documents/newNote.md");
-                if (note.createNewFile()) {
-                    // change file to template
-                    // change file name and location
-                    // open file
-                    openN();
-                }
-                else {
-                    System.out.print("that note already exists");
-                }
+        try {
+            File note = new File("root/internal/Documents/newNote.md");
+            if (note.createNewFile()) {
+                // change file to template
+                // change file name and location
+                // open file
+                openN();
             }
-            catch (IOException newE) {
-                System.out.print("error");
-                newE.printStackTrace();
+            else {
+                System.out.print("that note already exists");
             }
         }
+        catch (IOException newE) {
+            System.out.print("error");
+            newE.printStackTrace();
+        }
+    }
     static void openN() {
         try {
             File target = new File("");
