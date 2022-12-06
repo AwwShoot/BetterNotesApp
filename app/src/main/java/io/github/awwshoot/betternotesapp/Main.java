@@ -95,7 +95,7 @@ public class Main extends AppCompatActivity {
     public void onClick(View v) {
         switch (v.getId()) {
 
-            case R.id.buttonGoogleCalendar: {
+            case R.id.buttonCalendar: {
                 // do google calendar integration
                 break;
             }
