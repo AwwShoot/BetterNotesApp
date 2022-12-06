@@ -1,33 +1,38 @@
 package folders;
 
+import android.content.Intent;
+
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.lang.Exception;
-import java.nio.file.Files;
 
 public class Note {
     static void newN() {
         // create new file in default
         try {
-            File note = new File("root/internal/Documents/newNote.md");
-            if (note.createNewFile()) {
-                // change file to template
-                // change file name and location
-                // open file
-                openN();
-            }
-            else {
-                System.out.print("that note already exists");
-            }
-        }
-        catch (IOException newE) {
+            // create new file
+            Intent create = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+            create.addCategory(Intent.CATEGORY_OPENABLE);
+            create.setType(".md");
+            create.putExtra(Intent.EXTRA_TITLE, ".md");
+            // read/write whatever is in template
+            FileReader reader = new FileReader("");
+            FileWriter writer = new FileWriter("");
+            writer.write(reader.read());
+            // change file name and location
+            renameN();
+            moveN();
+            // open file
+            openN(note);
+        } catch (IOException newE) {
             System.out.print("error");
             newE.printStackTrace();
         }
     }
-    static void openN() {
+
+    static void openN(File note) {
         try {
             File target = new File("");
             // get file location
@@ -37,6 +42,9 @@ public class Note {
                 String check = documentsFolder.toString();
                 if (check == directoryList[counter]) {
                     // open file
+                    Intent file = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                    file.addCategory(Intent.CATEGORY_OPENABLE);
+                    file.setType("root/internal/Documents/");
                 }
             }
         }
