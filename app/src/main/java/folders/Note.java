@@ -25,14 +25,14 @@ public class Note {
             renameN();
             moveN();
             // open file
-            openN(note);
+            openN();
         } catch (IOException newE) {
             System.out.print("error");
             newE.printStackTrace();
         }
     }
 
-    static void openN(File note) {
+    static void openN() {
         try {
             File target = new File("");
             // get file location
