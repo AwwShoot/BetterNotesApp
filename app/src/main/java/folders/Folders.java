@@ -1,5 +1,7 @@
 package folders;
 
+import android.content.Intent;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -32,8 +34,10 @@ public class Folders {
             for (int counter = 1; counter < directoryList.length; counter++) {
             String check = documentsFolder.toString();
                 if (check == directoryList[counter]) {
-                    // open file
-
+                    // open folder
+                    Intent file = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                    file.addCategory(Intent.CATEGORY_OPENABLE);
+                    file.setType("root/internal/Documents/");
                 }
             }
         }
