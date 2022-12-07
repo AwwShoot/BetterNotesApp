@@ -18,8 +18,12 @@ import android.view.View;
 import android.widget.Button;
 import android.content.SharedPreferences;
 import io.github.awwshoot.betternotesapp.databinding.ActivityMainBinding;
+
+import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.CompoundButton;
+import android.view.View.OnClickListener;
+import android.widget.Toast;
 
 public class Main extends AppCompatActivity {
 
@@ -49,26 +53,17 @@ public class Main extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_calendar)
+                R.id.nav_home)
                 .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-
-        // Handle buttons
-
-        // Handle Google Calendar
-
-
         // Handle Create New Document
 
 
         // Handle View All Documents
-
-
-        // Handle Dark Mode
 
 
 
@@ -88,28 +83,19 @@ public class Main extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+    public void onClickCreateDoc(View v)
+    {
+        EditText docName = (EditText) findViewById(R.id.txtDocName);
 
-    // Handle theme switch
+        Toast.makeText(this, docName.getText(), Toast.LENGTH_LONG).show();
+
+
+    }
+    public void onClickViewDoc(View v)
+    {
+        Toast.makeText(this, "Clicked on view", Toast.LENGTH_LONG).show();
+    }
 
     // Handle ALl Button Clicks
-    public void onClick(View v) {
-        switch (v.getId()) {
 
-            case R.id.buttonCalendar: {
-                // do google calendar integration
-                break;
-            }
-
-            case R.id.buttonCreateDocument: {
-                // do create document
-                break;
-            }
-
-                case R.id.buttonViewDocuments: {
-                    // do view documents
-                    break;
-                }
-
-        }
-    }
 }
