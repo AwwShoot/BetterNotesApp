@@ -7,9 +7,10 @@ import java.io.IOException;
 
 public class Folders {
     static void newF() {
+        String folderName = "String";
         // create new file in default
         try {
-            String destination = "root/internal/Documents/newFold";
+            String destination = "root/internal/Documents/" + folderName;
             File file = new File(destination);
             if (file.mkdirs()) {
                 renameF();
@@ -26,10 +27,11 @@ public class Folders {
     }
 
     static void openF() {
+        String folderName = "String";
         try {
             File target = new File("");
             // get file location
-            File documentsFolder = new File("root/internal/Documents/");
+            File documentsFolder = new File("root/internal/Documents/" +folderName);
             String[] directoryList = documentsFolder.list();
             for (int counter = 1; counter < directoryList.length; counter++) {
             String check = documentsFolder.toString();
@@ -37,7 +39,7 @@ public class Folders {
                     // open folder
                     Intent file = new Intent(Intent.ACTION_OPEN_DOCUMENT);
                     file.addCategory(Intent.CATEGORY_OPENABLE);
-                    file.setType("root/internal/Documents/");
+                    file.setType("root/internal/Documents/" + folderName);
                 }
             }
         }
@@ -48,11 +50,12 @@ public class Folders {
     }
 
     static void renameF() {
+        String folderName = "String";
         try {
             // get folder location
-            File target = new File("");
+            File target = new File("root/internal/Documents/" + folderName);
             // changing folder directory
-            File change = new File("");
+            File change = new File("root/internal/Documents/" + folderName);
         }
         catch (Exception renameE) {
             System.out.print("error");
@@ -60,9 +63,10 @@ public class Folders {
         }
     }
     static void deleteF() {
+        String folderName = "String";
         try {
             // get folder location
-            File target = new File("");
+            File target = new File("root/internal/Documents/" + folderName);
             // remove folder from directory
             target.delete();
         }
@@ -72,11 +76,12 @@ public class Folders {
         }
     }
     static void moveF() {
+        String folderName = "String";
         try {
             // get folder location
-            File target = new File("");
+            File target = new File("root/internal/Documents/" + folderName);
             // changing folder directory
-            File change = new File("");
+            File change = new File("root/internal/Documents/" + folderName);
         }
         catch (Exception moveE) {
             System.out.print("error");
