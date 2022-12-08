@@ -44,11 +44,12 @@ public class Note {
             String[] directoryList = documentsFolder.list();
             for (int counter = 1; counter < directoryList.length; counter++) {
                 String check = documentsFolder.toString();
-                if (check == directoryList[counter]) {
+                if (check.equals(directoryList[counter])) {
                     // open file
                     Intent file = new Intent(Intent.ACTION_OPEN_DOCUMENT);
                     file.addCategory(Intent.CATEGORY_OPENABLE);
                     file.setType("root/internal/Documents/" + newFolderName + "/" + fileName + ".md");
+                    startActivityForResult(<Intent name>, CREATE_FILE);
                 }
             }
         }
