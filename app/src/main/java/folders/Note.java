@@ -1,6 +1,11 @@
 package folders;
 
+import static androidx.core.app.ActivityCompat.startActivityForResult;
+
 import android.content.Intent;
+import android.os.Parcelable;
+import android.provider.DocumentsContract;
+import android.util.Log;
 
 import java.io.File;
 import java.io.FileReader;
@@ -49,7 +54,9 @@ public class Note {
                     Intent file = new Intent(Intent.ACTION_OPEN_DOCUMENT);
                     file.addCategory(Intent.CATEGORY_OPENABLE);
                     file.setType("root/internal/Documents/" + newFolderName + "/" + fileName + ".md");
-                    startActivityForResult(<Intent name>, CREATE_FILE);
+                    // specifying URI directory to be opened by system file picker
+                    file.putExtra(DocumentsContract.EXTRA_INITIAL_URI, "root/internal/Documents/" + newFolderName + "/");
+                    startActivityForResult(file, CREATE_FILE);
                 }
             }
         }
