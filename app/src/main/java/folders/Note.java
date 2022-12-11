@@ -3,9 +3,11 @@ package folders;
 import static androidx.core.app.ActivityCompat.startActivityForResult;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Parcelable;
 import android.provider.DocumentsContract;
 import android.util.Log;
+import android.view.KeyEvent;
 
 import java.io.File;
 import java.io.FileReader;
@@ -14,6 +16,7 @@ import java.io.IOException;
 import java.lang.Exception;
 
 public class Note {
+
     static void newN() {
         String fileName = "String";
         // create new file in default
@@ -38,6 +41,9 @@ public class Note {
         }
     }
 
+    // request code for picking .md file
+    private static final int PICK_MD_FILE = 2;
+
     static void openN() {
         String fileName = "String";
         String folderName = "String";
@@ -56,7 +62,8 @@ public class Note {
                     file.setType("root/internal/Documents/" + newFolderName + "/" + fileName + ".md");
                     // specifying URI directory to be opened by system file picker
                     file.putExtra(DocumentsContract.EXTRA_INITIAL_URI, "root/internal/Documents/" + newFolderName + "/");
-                    startActivityForResult(file, CREATE_FILE);
+                    // **
+                    startActivityForResult(file, PICK_MD_FILE);
                 }
             }
         }
@@ -65,6 +72,11 @@ public class Note {
             openE.printStackTrace();
         }
     }
+
+    private static void startActivityForResult(Intent file, int pickMdFile) {
+
+    }
+
     static void renameN() {
         String fileName = "String";
         String folderName = "String";
