@@ -33,7 +33,7 @@ public class Note {
             // open file
             openN();
         } catch (IOException newE) {
-            System.out.print("error");
+            Log.e("error","error");
             newE.printStackTrace();
         }
     }
@@ -61,7 +61,7 @@ public class Note {
             }
         }
         catch (Exception openE) {
-            System.out.print("error");
+            Log.e("error","error");
             openE.printStackTrace();
         }
     }
@@ -75,7 +75,7 @@ public class Note {
             File change = new File("root/internal/Documents/" + folderName + "/" + fileName + ".md");
         }
         catch (Exception renameE) {
-            System.out.print("error");
+            Log.e("error","error");
             renameE.printStackTrace();
         }
     }
@@ -89,7 +89,7 @@ public class Note {
             target.delete();
         }
         catch (Exception deleteE) {
-            System.out.print("error");
+            Log.e("error","error");
             deleteE.printStackTrace();
         }
     }
@@ -105,7 +105,7 @@ public class Note {
             File change = new File("root/internal/Documents/" + newFolderName + "/" + fileName + ".md");
         }
         catch (Exception moveE) {
-            System.out.print("error");
+            Log.e("error","error");
             moveE.printStackTrace();
         }
     }
@@ -122,7 +122,7 @@ public class Note {
             // save changes
         }
         catch (IOException editE) {
-            System.out.print("error");
+            Log.e("error","error");
             editE.printStackTrace();
         }
     }
