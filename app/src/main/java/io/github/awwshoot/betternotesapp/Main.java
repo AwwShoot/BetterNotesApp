@@ -20,7 +20,6 @@ import android.content.SharedPreferences;
 import io.github.awwshoot.betternotesapp.databinding.ActivityMainBinding;
 
 import android.widget.EditText;
-import android.widget.Switch;
 import android.widget.CompoundButton;
 import android.view.View.OnClickListener;
 import android.widget.Toast;
@@ -60,12 +59,6 @@ public class Main extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-        // Handle Create New Document
-
-
-        // Handle View All Documents
-
-
 
     }
 
@@ -83,19 +76,18 @@ public class Main extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
-    public void onClickCreateDoc(View v)
-    {
-        EditText docName = (EditText) findViewById(R.id.txtDocName);
 
-        Toast.makeText(this, docName.getText(), Toast.LENGTH_LONG).show();
-
-
-    }
     public void onClickViewDoc(View v)
     {
-        Toast.makeText(this, "Clicked on view", Toast.LENGTH_LONG).show();
-    }
+        // Get Document Name
+        EditText docName = (EditText) findViewById(R.id.txtDocName);
 
-    // Handle ALl Button Clicks
+        String name = String.valueOf(docName.getText());
+
+        Intent intent = new Intent(Main.this, DocView.class);
+        intent.putExtra("message", name);
+        startActivity(intent);
+        //setContentView(R.layout.activity_doc_view);
+    }
 
 }
