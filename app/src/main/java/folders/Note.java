@@ -1,6 +1,13 @@
 package folders;
 
+import static androidx.core.app.ActivityCompat.startActivityForResult;
+
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Parcelable;
+import android.provider.DocumentsContract;
+import android.util.Log;
+import android.view.KeyEvent;
 
 import java.io.File;
 import java.io.FileReader;
@@ -9,6 +16,7 @@ import java.io.IOException;
 import java.lang.Exception;
 
 public class Note {
+
     static void newN() {
         String fileName = "String";
         // create new file in default
@@ -28,10 +36,13 @@ public class Note {
             // open file
             openN();
         } catch (IOException newE) {
-            System.out.print("error");
+            Log.e("error","error");
             newE.printStackTrace();
         }
     }
+
+    // request code for picking .md file
+    private static final int PICK_MD_FILE = 2;
 
     static void openN() {
         String fileName = "String";
@@ -44,19 +55,28 @@ public class Note {
             String[] directoryList = documentsFolder.list();
             for (int counter = 1; counter < directoryList.length; counter++) {
                 String check = documentsFolder.toString();
-                if (check == directoryList[counter]) {
+                if (check.equals(directoryList[counter])) {
                     // open file
                     Intent file = new Intent(Intent.ACTION_OPEN_DOCUMENT);
                     file.addCategory(Intent.CATEGORY_OPENABLE);
                     file.setType("root/internal/Documents/" + newFolderName + "/" + fileName + ".md");
+                    // specifying URI directory to be opened by system file picker
+                    file.putExtra(DocumentsContract.EXTRA_INITIAL_URI, "root/internal/Documents/" + newFolderName + "/");
+                    // **
+                    startActivityForResult(file, PICK_MD_FILE);
                 }
             }
         }
         catch (Exception openE) {
-            System.out.print("error");
+            Log.e("error","error");
             openE.printStackTrace();
         }
     }
+
+    private static void startActivityForResult(Intent file, int pickMdFile) {
+
+    }
+
     static void renameN() {
         String fileName = "String";
         String folderName = "String";
@@ -67,7 +87,7 @@ public class Note {
             File change = new File("root/internal/Documents/" + folderName + "/" + fileName + ".md");
         }
         catch (Exception renameE) {
-            System.out.print("error");
+            Log.e("error","error");
             renameE.printStackTrace();
         }
     }
@@ -81,7 +101,7 @@ public class Note {
             target.delete();
         }
         catch (Exception deleteE) {
-            System.out.print("error");
+            Log.e("error","error");
             deleteE.printStackTrace();
         }
     }
@@ -97,7 +117,7 @@ public class Note {
             File change = new File("root/internal/Documents/" + newFolderName + "/" + fileName + ".md");
         }
         catch (Exception moveE) {
-            System.out.print("error");
+            Log.e("error","error");
             moveE.printStackTrace();
         }
     }
@@ -114,7 +134,7 @@ public class Note {
             // save changes
         }
         catch (IOException editE) {
-            System.out.print("error");
+            Log.e("error","error");
             editE.printStackTrace();
         }
     }

@@ -1,6 +1,7 @@
 package folders;
 
 import android.content.Intent;
+import android.util.Log;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,11 +18,11 @@ public class Folders {
                 openF();
             }
             else {
-                System.out.print("that note already exists");
+                Log.e("error","error");
             }
         }
         catch (Exception newE) {
-            System.out.print("error");
+            Log.e("error","error");
             newE.printStackTrace();
         }
     }
@@ -44,7 +45,7 @@ public class Folders {
             }
         }
         catch (Exception openE) {
-            System.out.print("error");
+            Log.e("error","error");
             openE.printStackTrace();
         }
     }
@@ -58,7 +59,7 @@ public class Folders {
             File change = new File("root/internal/Documents/" + folderName);
         }
         catch (Exception renameE) {
-            System.out.print("error");
+            Log.e("error","error");
             renameE.printStackTrace();
         }
     }
@@ -71,7 +72,7 @@ public class Folders {
             target.delete();
         }
         catch (Exception deleteE) {
-            System.out.print("error");
+            Log.e("error","error");
             deleteE.printStackTrace();
         }
     }
@@ -84,7 +85,7 @@ public class Folders {
             File change = new File("root/internal/Documents/" + folderName);
         }
         catch (Exception moveE) {
-            System.out.print("error");
+            Log.e("error","error");
             moveE.printStackTrace();
         }
     }
