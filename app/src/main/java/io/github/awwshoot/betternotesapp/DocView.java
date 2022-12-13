@@ -6,8 +6,12 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.FilenameFilter;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
@@ -22,6 +26,8 @@ import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import io.github.awwshoot.betternotesapp.folders.Note;
 
 public class DocView extends AppCompatActivity {
 
@@ -38,8 +44,10 @@ public class DocView extends AppCompatActivity {
     private Item[] fileList;
     private File path = new File(Environment.getExternalStorageDirectory() + "/Documents/BetterNotes/Docs");
     private File templatePath = new File(Environment.getExternalStorageDirectory() + "/Documents/BetterNotes/Templates");
-    private File oldFilePath = new File(Environment.getExternalStorageDirectory() + "/Documents/BetterNotes/Docs");
+    private File notesPath = new File(Environment.getExternalStorageDirectory() + "/Documents/BetterNotes/Docs/All Docs");
     private String chosenFile;
+    private String chosenPath; // global variables are gross yes, but sometimes ya gotta do what ya gotta do.
+    // The above variable exists solely to hack fix onClickSave and I am sorry to whoever, if anyone, deals with this code next
     private static final int DIALOG_LOAD_FILE = 1000;
 
     ListAdapter adapter;
@@ -228,12 +236,13 @@ public class DocView extends AppCompatActivity {
                         else if (chosenFile.equalsIgnoreCase("Add Document") && !sel.exists()) {
                             Toast.makeText(DocView.this, "Chose a Template", Toast.LENGTH_LONG).show();
                             // Handle Creating a Document
-                            //Note.newNote(name, folder, template);
+
                             // Change to activity for selecting template
 
 
                             // Get file path saved
-                            oldFilePath = path;
+
+
 
                             // Move to Template Folder
                             firstLvl = 1;
@@ -280,7 +289,7 @@ public class DocView extends AppCompatActivity {
                         // Document Options
                         else if (chosenFile.equalsIgnoreCase("Open File") && !sel.exists()) {
                             // Path to file that is to be opened
-                            String newPath = oldFilePath.getAbsolutePath() + "/" + documentName;
+                            String newPath = notesPath.getAbsolutePath() + "/" + documentName;
 
                             // Call open document
                             // Since its an existing file the template path will be the same as the file path
@@ -288,11 +297,11 @@ public class DocView extends AppCompatActivity {
                         }
                         else if (chosenFile.equalsIgnoreCase("Delete File") && !sel.exists()) {
                             // Path to file that is to be deleted
-                            String newPath = oldFilePath.getAbsolutePath() + "/" + documentName;
+                            String newPath = notesPath.getAbsolutePath() + "/" + documentName;
                         }
                         else if (chosenFile.equalsIgnoreCase("Rename File") && !sel.exists()) {
                             // Path to file that is to be renamed
-                            String newPath = oldFilePath.getAbsolutePath() + "/" + documentName;
+                            String newPath = notesPath.getAbsolutePath() + "/" + documentName;
                         }
 
 
@@ -302,7 +311,7 @@ public class DocView extends AppCompatActivity {
                         else {
 
                             // Get file path saved
-                            oldFilePath = path;
+
 
                             // Perform action with file picked
                             // File functionality goes here
@@ -320,8 +329,8 @@ public class DocView extends AppCompatActivity {
 
 
                                 // Path to file that is to be created
-                                String newPath = oldFilePath.getAbsolutePath() + "/" + documentName;
-
+                                String newPath = notesPath.getAbsolutePath() + "/" + documentName;
+                                Note.newNote(newPath);
                                 // Call create doc function
                                 openDocument(templatePath, newPath);
                             }
@@ -359,14 +368,39 @@ public class DocView extends AppCompatActivity {
 
     public void openDocument(String pathOfTemplate, String pathOfFile){
         // Switch to doc editor view
+        chosenPath = pathOfFile;
         setContentView(R.layout.doc_editor);
         EditText textEditor = findViewById(R.id.textEditor);
-        textEditor.setText("get string from template");
+        File template = new File(pathOfTemplate);
+        String data = ""; // holds data from template or is empty if template failed to load or didn't exist
+        try {
+            // read old data line by line and put it in the data to be placed in the UI
+            // This feels kinda middle-man-y but I really am running on fumes already.
+            Scanner templateReader = new Scanner(template);
+            while (templateReader.hasNextLine()) {
+                data += templateReader.nextLine() + "\n";
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        textEditor.setText(data);
     }
 
-    public void onClickSave(View v, String pathToSave){
+    public void onClickSave(View v) {
 
         // Save document, use pathToSave to save it there
+        File note = new File(chosenPath + ".txt");
+        // get textEditor from openDocument() to get the text from it
+        EditText textEditor = findViewById(R.id.textEditor);
+        try {
+            FileWriter noteWriter = new FileWriter(note);
+            noteWriter.write(textEditor.getText().toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
 
         // Go back to homescreen
         startActivity(new Intent(DocView.this, Main.class));

@@ -10,31 +10,23 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.Exception;
+import java.util.Scanner;
 
 public class Note {
     static File defaultPath = new File(Environment.getExternalStorageDirectory() + "/Documents/BetterNotes/Docs");
-    public static void newNote(String fileName, String folderName, String templateName) {
+    public static void newNote(String path) {
         // create new file in default
         try {
             // create new file
             Log.i("Notes", defaultPath.toString());
-            File newNote = new File(defaultPath + "/" + folderName + "/" + fileName + ".txt");
-            // If the file is not created, throw an error
-            if (!newNote.createNewFile()) {
-                Log.e("Notes", "Filename already in use or file cannot be created");
-                Log.i("Notes", defaultPath.toString());
-                return;
-            }
-            Log.i("Notes", "Successfully created file: " + newNote);
+            File newNote = new File(path + ".txt");
+            // File.createNewFile() does not seem to want to play nice, so I have taken to alternative methods
+            FileWriter fileCreator = new FileWriter(newNote);
+            fileCreator.write("\n"); // write anything to create the file because for some reason THAT'S not a security issue but createNewFile is
+            fileCreator.close();
+
             // If a template has been selected, read its contents and paste them into the new document
-            if (!templateName.equals("")) {
-                FileReader reader = new FileReader(defaultPath + "/raw/" + templateName + ".txt");
-                FileWriter writer = new FileWriter(newNote);
-                char[] buffer = new char[1];
-                while (reader.read(buffer, 0, 1) != -1) {
-                    writer.write(buffer, 0, 1); // magic numbers because I can't be bothered right now
-                }
-            }
+
         } catch (IOException newE) {
             Log.e("error","error");
             newE.printStackTrace();
