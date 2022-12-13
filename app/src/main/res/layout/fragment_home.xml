@@ -33,16 +33,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/buttonCreateDocument"
-        android:layout_width="277dp"
-        android:layout_height="64dp"
-        android:layout_marginStart="64dp"
-        android:layout_marginTop="64dp"
-        android:onClick="onClickCreateDoc"
-        android:text="Create New Document"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+
 
     <Button
         android:id="@+id/buttonViewDocuments"
@@ -51,7 +42,7 @@
         android:layout_marginStart="64dp"
         android:layout_marginTop="192dp"
         android:onClick="onClickViewDoc"
-        android:text="View Documents"
+        android:text="Manage Documents"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
