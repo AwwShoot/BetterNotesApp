@@ -1,13 +1,9 @@
 package folders;
 
-import static androidx.core.app.ActivityCompat.startActivityForResult;
-
 import android.content.Intent;
-import android.net.Uri;
-import android.os.Parcelable;
+import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.util.Log;
-import android.view.KeyEvent;
 
 import java.io.File;
 import java.io.FileReader;
@@ -17,24 +13,33 @@ import java.lang.Exception;
 
 public class Note {
 
-    static void newN() {
-        String fileName = "String";
+    public static void newNote(String fileName, String folderName, String templateName) {
         // create new file in default
         try {
             // create new file
-            Intent create = new Intent(Intent.ACTION_CREATE_DOCUMENT);
-            create.addCategory(Intent.CATEGORY_OPENABLE);
-            create.setType(fileName + ".md");
-            create.putExtra(Intent.EXTRA_TITLE,  fileName + ".md");
+            String documentPath = Environment.getExternalStorageDirectory().getPath();
+            Log.i("Notes", documentPath);
+            File newNote = new File(documentPath + folderName + fileName + ".txt");
+            if (!newNote.createNewFile()) {
+                Log.e("Notes", "Filename already in use or file cannot be created");
+                Log.i("Notes", documentPath);
+                return;
+            }
+            Log.i("Notes", "Successfully created file: " + newNote);
             // read/write whatever is in template
-            FileReader reader = new FileReader(fileName + ".md");
-            FileWriter writer = new FileWriter(fileName + ".md");
-            writer.write(reader.read());
+            FileReader reader = new FileReader(templateName + ".txt");
+            FileWriter writer = new FileWriter(newNote);
+            char[] buffer = new char[1];
+            while (reader.read(buffer, 0, 1) != -1) {
+                writer.write(buffer, 0, 1); // magic numbers because I can't be bothered right now
+            }
+
+
+
             // change file name and location
-            renameN();
-            moveN();
+
             // open file
-            openN();
+            openNote();
         } catch (IOException newE) {
             Log.e("error","error");
             newE.printStackTrace();
@@ -44,7 +49,7 @@ public class Note {
     // request code for picking .md file
     private static final int PICK_MD_FILE = 2;
 
-    static void openN() {
+    static void openNote() {
         String fileName = "String";
         String folderName = "String";
         String newFolderName = "String";
@@ -77,9 +82,7 @@ public class Note {
 
     }
 
-    static void renameN() {
-        String fileName = "String";
-        String folderName = "String";
+    static void renameNote(String fileName, String folderName) {
         try {
             // get file location
             File target = new File("root/internal/Documents/" + folderName + "/" + fileName + ".md");
@@ -91,9 +94,7 @@ public class Note {
             renameE.printStackTrace();
         }
     }
-    static void deleteN() {
-        String fileName = "String";
-        String folderName = "String";
+    static void deleteNote(String fileName, String folderName) {
         try {
             // get file location
             File target = new File("root/internal/Documents/" + folderName + "/" + fileName + ".md");
@@ -105,31 +106,26 @@ public class Note {
             deleteE.printStackTrace();
         }
     }
-    static void moveN() {
-        String fileName = "String";
-        String folderName = "String";
-        String newFolderName = "String";
+    static void moveNote(String fileName, String currentFolder, String newFolder) {
+
 
         try {
             // get file location
-            File target = new File("root/internal/Documents/" + folderName + "/" + fileName + ".md");
+            File target = new File("root/internal/Documents/" + currentFolder + "/" + fileName + ".md");
             // changing file directory
-            File change = new File("root/internal/Documents/" + newFolderName + "/" + fileName + ".md");
+            File change = new File("root/internal/Documents/" + newFolder + "/" + fileName + ".md");
         }
         catch (Exception moveE) {
             Log.e("error","error");
             moveE.printStackTrace();
         }
     }
-    static void editN() {
-        String fileName = "String";
-        String folderName = "String";
-        String userInput = "String";
+    static void editNote(String fileName, String folderName, char[] data) {
         // get file location
         try {
             FileWriter editor = new FileWriter("root/internal/Documents/" + folderName + "/" + fileName + ".md");
             // allow editing access
-            editor.write(userInput);
+            editor.write(data);
             editor.close();
             // save changes
         }
