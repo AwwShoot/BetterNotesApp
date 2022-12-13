@@ -1,4 +1,4 @@
-package folders;
+package io.github.awwshoot.betternotesapp.folders;
 
 import android.content.Intent;
 import android.os.Environment;
@@ -12,51 +12,41 @@ import java.io.IOException;
 import java.lang.Exception;
 
 public class Note {
-
+    static File defaultPath = new File(Environment.getExternalStorageDirectory() + "/Documents/BetterNotes/Docs");
     public static void newNote(String fileName, String folderName, String templateName) {
         // create new file in default
         try {
             // create new file
-            String documentPath = Environment.getExternalStorageDirectory().getPath();
-            Log.i("Notes", documentPath);
-            File newNote = new File(documentPath + folderName + fileName + ".txt");
+            Log.i("Notes", defaultPath.toString());
+            File newNote = new File(defaultPath + "/" + folderName + "/" + fileName + ".txt");
+            // If the file is not created, throw an error
             if (!newNote.createNewFile()) {
                 Log.e("Notes", "Filename already in use or file cannot be created");
-                Log.i("Notes", documentPath);
+                Log.i("Notes", defaultPath.toString());
                 return;
             }
             Log.i("Notes", "Successfully created file: " + newNote);
-            // read/write whatever is in template
-            FileReader reader = new FileReader(templateName + ".txt");
-            FileWriter writer = new FileWriter(newNote);
-            char[] buffer = new char[1];
-            while (reader.read(buffer, 0, 1) != -1) {
-                writer.write(buffer, 0, 1); // magic numbers because I can't be bothered right now
+            // If a template has been selected, read its contents and paste them into the new document
+            if (!templateName.equals("")) {
+                FileReader reader = new FileReader(defaultPath + "/raw/" + templateName + ".txt");
+                FileWriter writer = new FileWriter(newNote);
+                char[] buffer = new char[1];
+                while (reader.read(buffer, 0, 1) != -1) {
+                    writer.write(buffer, 0, 1); // magic numbers because I can't be bothered right now
+                }
             }
-
-
-
-            // change file name and location
-
-            // open file
-            openNote();
         } catch (IOException newE) {
             Log.e("error","error");
             newE.printStackTrace();
         }
     }
 
-    // request code for picking .md file
-    private static final int PICK_MD_FILE = 2;
 
-    static void openNote() {
-        String fileName = "String";
-        String folderName = "String";
-        String newFolderName = "String";
+
+    static void openNote(String fileName, String folderName) {
         try {
-            File target = new File("root/internal/Documents/" + folderName + "/" + fileName + ".md");
             // get file location
-            File documentsFolder = new File("root/internal/Documents/" + newFolderName + "/" + fileName + ".md");
+            File documentsFolder = new File("root/internal/Documents/" + folderName + "/" + fileName + ".md");
             String[] directoryList = documentsFolder.list();
             for (int counter = 1; counter < directoryList.length; counter++) {
                 String check = documentsFolder.toString();
@@ -64,11 +54,11 @@ public class Note {
                     // open file
                     Intent file = new Intent(Intent.ACTION_OPEN_DOCUMENT);
                     file.addCategory(Intent.CATEGORY_OPENABLE);
-                    file.setType("root/internal/Documents/" + newFolderName + "/" + fileName + ".md");
+                    file.setType("root/internal/Documents/" + folderName + "/" + fileName + ".md");
                     // specifying URI directory to be opened by system file picker
-                    file.putExtra(DocumentsContract.EXTRA_INITIAL_URI, "root/internal/Documents/" + newFolderName + "/");
+                    file.putExtra(DocumentsContract.EXTRA_INITIAL_URI, "root/internal/Documents/" + folderName + "/");
                     // **
-                    startActivityForResult(file, PICK_MD_FILE);
+
                 }
             }
         }
@@ -78,9 +68,7 @@ public class Note {
         }
     }
 
-    private static void startActivityForResult(Intent file, int pickMdFile) {
 
-    }
 
     static void renameNote(String fileName, String folderName) {
         try {

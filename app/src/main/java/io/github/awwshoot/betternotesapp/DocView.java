@@ -9,12 +9,10 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.util.ArrayList;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 import android.view.View;
@@ -59,6 +57,7 @@ public class DocView extends AppCompatActivity {
 
         showDialog(DIALOG_LOAD_FILE);
         Log.d(TAG, path.getAbsolutePath());
+
 
     }
 
@@ -229,6 +228,7 @@ public class DocView extends AppCompatActivity {
                         else if (chosenFile.equalsIgnoreCase("Add Document") && !sel.exists()) {
                             Toast.makeText(DocView.this, "Chose a Template", Toast.LENGTH_LONG).show();
                             // Handle Creating a Document
+                            //Note.newNote(name, folder, template);
                             // Change to activity for selecting template
 
 

@@ -1,7 +1,7 @@
 package io.github.awwshoot.betternotesapp;
 
-import android.content.res.Configuration;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 
 import com.google.android.material.navigation.NavigationView;
@@ -15,14 +15,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 
 import android.view.View;
-import android.widget.Button;
-import android.content.SharedPreferences;
+
+import io.github.awwshoot.betternotesapp.folders.Folders;
 import io.github.awwshoot.betternotesapp.databinding.ActivityMainBinding;
 
 import android.widget.EditText;
-import android.widget.CompoundButton;
-import android.view.View.OnClickListener;
-import android.widget.Toast;
+
+import java.io.File;
+import java.io.IOException;
 
 public class Main extends AppCompatActivity {
 
@@ -59,7 +59,14 @@ public class Main extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
+        // Instantiate files and folders needed
 
+
+        try {
+            Folders folderManager = new Folders(this.getApplicationContext());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
