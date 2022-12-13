@@ -32,7 +32,7 @@ import io.github.awwshoot.betternotesapp.folders.Note;
 public class DocView extends AppCompatActivity {
 
     // Stores names of traversed directories
-    ArrayList<String> str = new ArrayList<String>();
+    ArrayList<String> traversedDirectories = new ArrayList<String>();
 
     // Check if the first level of the directory structure is the one showing
 
@@ -44,7 +44,7 @@ public class DocView extends AppCompatActivity {
     private Item[] fileList;
     private File path = new File(Environment.getExternalStorageDirectory() + "/Documents/BetterNotes/Docs");
     private File templatePath = new File(Environment.getExternalStorageDirectory() + "/Documents/BetterNotes/Templates");
-    private File notesPath = new File(Environment.getExternalStorageDirectory() + "/Documents/BetterNotes/Docs/All Docs");
+    private final File notesPath = new File(Environment.getExternalStorageDirectory() + "/Documents/BetterNotes/Docs/All Docs");
     private String chosenFile;
     private String chosenPath; // global variables are gross yes, but sometimes ya gotta do what ya gotta do.
     // The above variable exists solely to hack fix onClickSave and I am sorry to whoever, if anyone, deals with this code next
@@ -197,7 +197,7 @@ public class DocView extends AppCompatActivity {
                             firstLvl = -1;
 
                             // Adds chosen directory to list
-                            str.add(chosenFile);
+                            traversedDirectories.add(chosenFile);
                             fileList = null;
                             path = new File(sel + "");
 
@@ -213,7 +213,7 @@ public class DocView extends AppCompatActivity {
                         else if (chosenFile.equalsIgnoreCase("up") && !sel.exists()) {
 
                             // present directory removed from list
-                            String s = str.remove(str.size() - 1);
+                            String s = traversedDirectories.remove(traversedDirectories.size() - 1);
 
                             // path modified to exclude present directory
                             path = new File(path.toString().substring(0,
@@ -222,7 +222,7 @@ public class DocView extends AppCompatActivity {
 
                             // if there are no more directories in the list, then
                             // its the first level
-                            if (str.isEmpty()) {
+                            if (traversedDirectories.isEmpty()) {
                                 firstLvl = 1;
                             }
                             loadFileList();
@@ -267,13 +267,13 @@ public class DocView extends AppCompatActivity {
                             // Go up a folder
 
                             // present directory removed from list
-                            String s = str.remove(str.size() - 1);
+                            String s = traversedDirectories.remove(traversedDirectories.size() - 1);
 
                             // path modified to exclude present directory
                             path = new File(path.toString().substring(0,
                                     path.toString().lastIndexOf(s)));
 
-                            if (str.isEmpty()) {
+                            if (traversedDirectories.isEmpty()) {
                                 firstLvl = 1;
                             }
                             loadFileList();
@@ -289,11 +289,11 @@ public class DocView extends AppCompatActivity {
                         // Document Options
                         else if (chosenFile.equalsIgnoreCase("Open File") && !sel.exists()) {
                             // Path to file that is to be opened
-                            String newPath = notesPath.getAbsolutePath() + "/" + documentName;
+
 
                             // Call open document
                             // Since its an existing file the template path will be the same as the file path
-                            openDocument(newPath, newPath);
+                            openDocument(chosenPath, chosenPath);
                         }
                         else if (chosenFile.equalsIgnoreCase("Delete File") && !sel.exists()) {
                             // Path to file that is to be deleted
@@ -346,7 +346,7 @@ public class DocView extends AppCompatActivity {
                                 // Send user to new dialog option menu to make a choice
                                 // Move to Document Option Menu
                                 firstLvl = 2;
-
+                                chosenPath = sel.toString(); // File is selected this pass through of the interface, but must be recalled next pass through when its menu is made
                                 path = new File(Environment.getExternalStorageDirectory() + "/Documents/BetterNotes/DocOptions");
                                 loadFileList();
                                 removeDialog(DIALOG_LOAD_FILE);
@@ -397,6 +397,7 @@ public class DocView extends AppCompatActivity {
         try {
             FileWriter noteWriter = new FileWriter(note);
             noteWriter.write(textEditor.getText().toString());
+            noteWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
