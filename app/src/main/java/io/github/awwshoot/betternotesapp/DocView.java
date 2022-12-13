@@ -43,7 +43,7 @@ public class DocView extends AppCompatActivity {
 
     private Item[] fileList;
     private File path = new File(Environment.getExternalStorageDirectory() + "/Documents/BetterNotes/Docs");
-    private File templatePath = new File(Environment.getExternalStorageDirectory() + "/Documents/BetterNotes/Templates");
+    private final File basePath = new File(Environment.getExternalStorageDirectory() + "/Documents/BetterNotes/Docs");
     private final File notesPath = new File(Environment.getExternalStorageDirectory() + "/Documents/BetterNotes/Docs/All Docs");
     private String chosenFile;
     private String chosenPath; // global variables are gross yes, but sometimes ya gotta do what ya gotta do.
@@ -107,14 +107,15 @@ public class DocView extends AppCompatActivity {
             }
 
             if (firstLvl == -1) {
-                Item temp[] = new Item[fileList.length + 4];
+                Item temp[] = new Item[fileList.length + 5];
                 for (int i = 0; i < fileList.length; i++) {
-                    temp[i+4] = fileList[i];
+                    temp[i+5] = fileList[i];
                 }
                 temp[0] = new Item("Up", R.drawable.directory_up);
                 temp[1] = new Item("Delete Folder", R.drawable.directory_options);
                 temp[2] = new Item("Rename Folder", R.drawable.directory_options);
                 temp[3] = new Item("Add Document", R.drawable.directory_options);
+                temp[4] = new Item("Add Folder", R.drawable.directory_options);
                 fileList = temp;
             }
             else if (firstLvl == 2) {
@@ -254,15 +255,32 @@ public class DocView extends AppCompatActivity {
                             Log.d(TAG, path.getAbsolutePath());
 
                         }
+                        // new folder
+                        else if (chosenFile.equalsIgnoreCase("Add Folder") && !sel.exists()) {
+                            // Code for adding goes here
+                            File newFolder = new File(path + "/" + documentName);
+                            if (!newFolder.mkdir()) {
+                                Log.e("DocViewer", "Failed to create new folder");
+                            }
+                        }
                         // Rename the folder
-                        else if (chosenFile.equalsIgnoreCase("Rename Folder") && !sel.exists()) {
-                            Toast.makeText(DocView.this, "Rename Folder selected", Toast.LENGTH_LONG).show();
+                        else if (chosenFile.equalsIgnoreCase("Rename") && !sel.exists()) {
+                            // Path to file that is to be renamed
+                            File targetFile = new File(chosenPath);
+                            int indexOfName = chosenPath.lastIndexOf('/');
+                            File currentPath = new File(chosenPath.substring(0, indexOfName) + "/" + documentName);
+                            if (!targetFile.renameTo(currentPath)) {
+                                Log.e("DocViewer", "Failed to rename file");
+                            }
                             // Open options menu
 
                         }
                         // Delete the folder
                         else if (chosenFile.equalsIgnoreCase("Delete Folder") && !sel.exists()) {
-                            Toast.makeText(DocView.this, "Delete Folder selected", Toast.LENGTH_LONG).show();
+                            File targetFolder = new File(path.toString());
+                            if (!targetFolder.delete()) {
+                                Log.e("DocViewer", "Failed to delete folder");
+                            }
 
                             // Go up a folder
 
@@ -297,11 +315,10 @@ public class DocView extends AppCompatActivity {
                         }
                         else if (chosenFile.equalsIgnoreCase("Delete File") && !sel.exists()) {
                             // Path to file that is to be deleted
-                            String newPath = notesPath.getAbsolutePath() + "/" + documentName;
-                        }
-                        else if (chosenFile.equalsIgnoreCase("Rename File") && !sel.exists()) {
-                            // Path to file that is to be renamed
-                            String newPath = notesPath.getAbsolutePath() + "/" + documentName;
+                            File targetFile = new File(chosenPath);
+                            if (!targetFile.delete()) {
+                                Log.e("DOciwer", "Failed to delete file");
+                            }
                         }
 
 
