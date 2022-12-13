@@ -391,7 +391,11 @@ public class DocView extends AppCompatActivity {
     public void onClickSave(View v) {
 
         // Save document, use pathToSave to save it there
-        File note = new File(chosenPath + ".txt");
+        File note = new File(chosenPath);
+        if (!note.exists()) { // if the note doesn't exist, then we are saving a new note, so .txt must be appended to the path, which otherwise is just the name
+            note = new File(chosenPath + ".txt");
+        }
+
         // get textEditor from openDocument() to get the text from it
         EditText textEditor = findViewById(R.id.textEditor);
         try {
